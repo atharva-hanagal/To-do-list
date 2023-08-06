@@ -1,0 +1,106 @@
+<!DOCTYPE html> 
+<html lang="en"> 
+<head> 
+ <meta charset="UTF-8"> 
+ <meta http-equiv="X-UA-Compatible" content="IE=edge"> 
+ <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+ <title>To-Do list</title> 
+ <style>
+    
+body{ 
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    background-color: rgb(104, 214, 36); 
+   } 
+   .input-character{ 
+    background-color: rgb(82, 224, 151); 
+    padding: 25px; 
+    border-radius: 10px; 
+    height: 60px; 
+    width: 450px; 
+    display: flex; 
+    justify-content: center; 
+    box-shadow: 2px 2px 8px; 
+    margin-top: 20px; 
+   } 
+   .input-container input{ 
+    padding: 8px; 
+    width: 300px; 
+    border: 1px solid; 
+   } 
+   .input-container button{ 
+    padding: 8px; 
+    background-color: rgba(210, 236, 12, 0.86); 
+    border: 1px solid; 
+   } 
+   .todo-item{ 
+    background-color: rgb(100, 235, 237); 
+    padding: 25px; 
+    border-radius: 10px; 
+    box-shadow: 2px 2px 8px; 
+    margin-top: 10px; 
+    width: 450px; 
+    display: flex; 
+    align-items: center; 
+    justify-content: space-between; 
+   } 
+   .todo-item img{ 
+    height: 30px; 
+    width: 30px; 
+    cursor: pointer; 
+   } 
+   
+ </style> 
+</head> 
+<body> 
+ <div class="input-container"> 
+ <input type="text" placeholder="Enter your to-do item here"> 
+ <button>Add</button> 
+ </div> 
+ <div class="todo-list"> 
+ <script>
+    
+const input = document.querySelector("input"); 
+const button = document.querySelector("button"); 
+const todoListDiv = document.querySelector(".todo-list"); 
+const deleteIcon = document.querySelector(".delete-icon"); 
+let todoList = []; 
+let count = 1; 
+function renderTodolist() { 
+ todoListDiv.innerHTML = ""; 
+ input.value = ""; 
+ const lengthofTodoList = todoList.length; 
+ let htmlTorender = ""; 
+ for (let i = 0; i < lengthofTodoList; i++) { 
+ htmlTorender += `<div class="todo-item"> 
+ <p>${todoList[i].text} </p> 
+ <img id="delete-icon"data-id="${todoList[i].id}"src="del.png"/> 
+ </div>`; 
+ } 
+ todoListDiv.insertAdjacentHTML("beforeend", htmlTorender) 
+} 
+button.addEventListener("click", function () { 
+ const inputValue = input.value.trim(); 
+ if (inputValue == "") 
+ return; 
+ todoList.push({ id: count++, text: inputValue }); 
+ console.log(todoList) 
+ renderTodolist() 
+}); 
+todoListDiv.addEventListener("click", function (e) { 
+ const target = e.target; 
+ const todoItemId = Number(target.dataset.id); 
+ if (target.id === "delete-icon") { 
+ const newTodoList = todoList.filter(function (item) { 
+ return item.id !== todoItemId; 
+ }); 
+ todoList = newTodoList; 
+ renderTodolist(); 
+ } 
+});
+ </script> 
+ </div> 
+ 
+</body> 
+</html> 
